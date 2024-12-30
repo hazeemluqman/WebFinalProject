@@ -19,6 +19,7 @@
                 <th>Start Date</th>
                 <th>Duration (Months)</th>
                 <th>Project Leader</th>
+                <th>Members</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -28,10 +29,32 @@
                 <td>{{ $grant->id }}</td>
                 <td>{{ $grant->title }}</td>
                 <td>{{ $grant->grant_amount }}</td>
-                <td>{{ $grant->grant_provider  }}</td>
+                <td>{{ $grant->grant_provider }}</td>
                 <td>{{ $grant->start_date }}</td>
                 <td>{{ $grant->duration_months }}</td>
-                <td>{{ $grant->academician->name }}</td>
+
+                <!-- Displaying Project Leader -->
+                <td>
+                    @foreach($grant->academicians as $academician)
+                    @if($academician->pivot->role == 'Project Leader')
+                    {{ $academician->name }}
+                    @endif
+                    @endforeach
+                </td>
+
+                <!-- Displaying Members -->
+                <td>
+                    <ul>
+                        @foreach($grant->academicians as $academician)
+                        @if($academician->pivot->role == 'Member')
+                        <li>{{ $academician->name }}</li>
+                        @endif
+                        @endforeach
+                    </ul>
+                </td>
+
+
+                <!-- Action Buttons -->
                 <td>
                     <a href="{{ route('grants.show', $grant->id) }}" class="btn btn-info">Show</a>
                     <a href="{{ route('grants.edit', $grant->id) }}" class="btn btn-primary">Edit</a>
@@ -48,5 +71,4 @@
     </table>
     @endif
 </div>
-
 @endsection

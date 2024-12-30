@@ -12,11 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('grant_members', function (Blueprint $table) {
-            $table->id(); 
-            $table->foreignId('grant_id')->constrained('grants'); // Foreign key to grants.id
-            $table->foreignId('academician_id')->constrained('academicians'); // Foreign key to academicians.id
-            $table->timestamps(); 
+            $table->id();
+            $table->foreignId('grant_id')->constrained()->onDelete('cascade');
+            $table->foreignId('academician_id')->constrained()->onDelete('cascade');
+            $table->string('role'); // 'Project Leader' or 'Member'
+            $table->timestamps();
         });
+        
     }
 
     /**
