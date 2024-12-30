@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Academician;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AcademicianController extends Controller
 {
@@ -28,19 +30,36 @@ class AcademicianController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'staff_number' => 'required',
-            'email' => 'required',
-            'college' => 'required',
-            'department' => 'required',
-            'position' => 'required',
-        ]);
+{
+    $request->validate([
+        'name' => 'required',
+        'staff_number' => 'required|unique:academicians,staff_number',
+        'email' => 'required|email|unique:academicians,email',
+        'college' => 'required',
+        'department' => 'required',
+        'position' => 'required',
+    ]);
 
-        Academician::create($request->all());
-        return redirect()->route('academicians.index');
-    }
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make('0000'),  // Default password "0000"
+    ]);
+
+    // Create the academician and associate with the user
+    Academician::create([
+        'name' => $request->name,
+        'staff_number' => $request->staff_number,
+        'email' => $request->email,
+        'college' => $request->college,
+        'department' => $request->department,
+        'position' => $request->position,
+        'user_id' => $user->id,
+    ]);
+
+    return redirect()->route('academicians.index');
+}
+
 
     /**
      * Display the specified resource.
