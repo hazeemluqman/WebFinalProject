@@ -1,0 +1,52 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <a href="/home">Back</a>
+    <h1>Grants List</h1>
+    <a href="{{ route('grants.create') }}" class="btn btn-primary mb-3">Add Grant</a>
+
+    @if ($grants->isEmpty())
+    <p>No grants found.</p>
+    @else
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Grant Amount</th>
+                <th>Grant Provider</th>
+                <th>Start Date</th>
+                <th>Duration (Months)</th>
+                <th>Project Leader</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($grants as $grant)
+            <tr>
+                <td>{{ $grant->id }}</td>
+                <td>{{ $grant->title }}</td>
+                <td>{{ $grant->grant_amount }}</td>
+                <td>{{ $grant->grant_provider  }}</td>
+                <td>{{ $grant->start_date }}</td>
+                <td>{{ $grant->duration_months }}</td>
+                <td>{{ $grant->academician->name }}</td>
+                <td>
+                    <a href="{{ route('grants.show', $grant->id) }}" class="btn btn-info">Show</a>
+                    <a href="{{ route('grants.edit', $grant->id) }}" class="btn btn-primary">Edit</a>
+                    <form action="{{ route('grants.destroy', $grant) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-md"
+                            onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @endif
+</div>
+
+@endsection
