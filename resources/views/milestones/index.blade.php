@@ -26,7 +26,14 @@
             @foreach($milestones as $milestone)
             <tr>
                 <td>{{ $milestone->id }}</td>
-                <td>{{ $milestone->	milestone_name }}</td>
+                <td>
+                    @if($milestone->grant)
+                    {{ $milestone->grant->title }}
+                    @else
+                    <span class="text-muted">No Grant Assigned</span>
+                    @endif
+                </td>
+
                 <td>{{ $milestone->milestone_name }}</td>
                 <td>{{ $milestone->target_completion_date }}</td>
                 <td>
