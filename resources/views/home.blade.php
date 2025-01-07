@@ -42,7 +42,8 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">Welcome to the Research Grant Management Dashboard</h1>
 
-        <div class="row">
+        <div class="row justify-content-center">
+            @can('isAdmin' , App\Models\Grant::class)
             <!-- Card for Academicians -->
             <div class="col-md-4">
                 <div class="card text-white bg-primary mb-3">
@@ -54,7 +55,9 @@
                     </div>
                 </div>
             </div>
+            @endcan
 
+            @canany(['isAdmin', 'isStaff'], App\Models\Grant::class)
             <!-- Card for Grants -->
             <div class="col-md-4">
                 <div class="card text-white bg-success mb-3">
@@ -62,11 +65,15 @@
                     <div class="card-body">
                         <h5 class="card-title">Manage Grants</h5>
                         <p class="card-text">View and manage all research grants.</p>
+
                         <a href="/grants" class="btn btn-light">View Grants</a>
+
                     </div>
                 </div>
             </div>
+            @endcanany
 
+            @canany(['isAdmin', 'isAcademician'], App\Models\Grant::class)
             <!-- Card for Milestones -->
             <div class="col-md-4">
                 <div class="card text-white bg-warning mb-3">
@@ -79,6 +86,7 @@
                 </div>
             </div>
         </div>
+        @endcanany
 
         <div class="row">
             <div class="col-md-12 text-center">
