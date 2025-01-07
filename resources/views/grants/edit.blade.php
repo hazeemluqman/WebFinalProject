@@ -63,7 +63,20 @@
                     </select>
                 </div>
 
-
+                <div class="form-group">
+                    <label for="members">Project Members</label>
+                    <div id="members">
+                        @foreach($academicians as $academician)
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="members[]"
+                                value="{{ $academician->id }}" id="member{{ $academician->id }}">
+                            <label class="form-check-label" for="member{{ $academician->id }}">
+                                {{ $academician->name }}
+                            </label>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{ route('grants.index') }}" class="btn btn-secondary">Cancel</a>
