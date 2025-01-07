@@ -24,7 +24,7 @@
             <div class="container">
                 <!-- Logo Section -->
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/login') }}">
-                    <img src="assets/img/logo.png" alt="Logo" class="img-fluid" style="max-height: 50px;">
+
                     <span class="d-none d-lg-block ms-2">RGMS</span>
                 </a>
 
@@ -61,8 +61,7 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle text-light" href="#" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"
-                                    style="width: 35px; height: 35px;">
+
                                 {{ Auth::user()->name }}
                             </a>
 
