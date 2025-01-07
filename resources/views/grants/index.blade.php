@@ -4,7 +4,9 @@
 <div class="container">
     <a href="/home">Back</a>
     <h1>Grants List</h1>
+    @can('isAdmin', App\Models\Grant::class)
     <a href="{{ route('grants.create') }}" class="btn btn-primary mb-3">Add Grant</a>
+    @endcan
 
     @if ($grants->isEmpty())
     <p>No grants found.</p>
