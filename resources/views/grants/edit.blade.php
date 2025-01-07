@@ -50,18 +50,32 @@
                     @enderror
                 </div>
 
-
                 <div class="mb-3">
                     <label for="project_leader_id" class="form-label">Project Leader</label>
                     <select name="project_leader_id" id="project_leader_id" class="form-control" required>
                         <option value="">Select Project Leader</option>
                         @foreach ($academicians as $academician)
                         <option value="{{ $academician->id }}"
-                            {{ old('project_leader_id') == $academician->id ? 'selected' : '' }}>
+                            {{ old('project_leader_id', $grant->project_leader_id) == $academician->id ? 'selected' : '' }}>
                             {{ $academician->name }} - {{ $academician->staff_number }}
                         </option>
                         @endforeach
                     </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="members" class="form-label">Project Members</label>
+                    <select name="members[]" id="members" class="form-control" multiple>
+                        @foreach ($academicians as $academician)
+                        <option value="{{ $academician->id }}"
+                            {{ in_array($academician->id, old('members', $grant->academicians->pluck('id')->toArray())) ? 'selected' : '' }}>
+                            {{ $academician->name }} - {{ $academician->staff_number }}
+                        </option>
+                        @endforeach
+                    </select>
+                    @error('members')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <button type="submit" class="btn btn-primary">Update</button>
