@@ -39,6 +39,7 @@ class MilestoneController extends Controller
             'status' => 'required',
             'deliverable' => 'required',
             'remarks' => 'nullable',
+            'date_updated' => 'nullable',
         ]);
 
         Milestone::create($request->all());
@@ -74,6 +75,7 @@ class MilestoneController extends Controller
             'status' => 'required',
             'deliverable' => 'required',
             'remarks' => 'required',
+            'date_updated' => 'nullable',
         ]);
 
         $milestone->update($request->all());

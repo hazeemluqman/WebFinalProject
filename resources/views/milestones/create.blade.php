@@ -45,6 +45,11 @@
             <textarea id="remarks" name="remarks" class="form-control"></textarea>
         </div>
 
+        <div class="mb-3">
+            <label for="date_updated" class="form-label">Date Updated</label>
+            <input type="date" id="date_updated" name="date_updated" class="form-control" required>
+        </div>
+
         <button type="submit" class="btn btn-success">Create Milestone</button>
         <a href="{{ route('milestones.index') }}" class="btn btn-secondary">Cancel</a>
     </form>

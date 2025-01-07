@@ -48,6 +48,14 @@
                 class="form-control">{{ old('remarks', $milestone->remarks) }}</textarea>
         </div>
 
+        <!-- Add Date Updated field -->
+        <div class="mb-3">
+            <label for="date_updated" class="form-label">Date Updated</label>
+            <input type="date" id="date_updated" name="date_updated" class="form-control"
+                value="{{ old('date_updated', \Carbon\Carbon::parse($milestone->date_updated)->toDateString()) }}"
+                required>
+        </div>
+
         <button type="submit" class="btn btn-primary">Update Milestone</button>
         <a href="{{ route('milestones.index') }}" class="btn btn-secondary">Cancel</a>
     </form>
