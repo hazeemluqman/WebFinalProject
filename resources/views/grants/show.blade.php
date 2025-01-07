@@ -70,8 +70,8 @@
                     <tbody>
                         @foreach($grant->milestones as $milestone)
                         <tr>
-                            <td>{{ $milestone->milestone_title }}</td>
-                            <td>{{ $milestone->completion_date }}</td>
+                            <td>{{ $milestone->milestone_name }}</td>
+                            <td>{{ $milestone->target_completion_date }}</td>
                             <td>{{ $milestone->deliverable }}</td>
                             <td>{{ $milestone->status }}</td>
                             <td>{{ $milestone->remarks }}</td>
