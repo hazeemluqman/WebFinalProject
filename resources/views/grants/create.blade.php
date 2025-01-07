@@ -89,11 +89,17 @@
                 <!-- Project Members Field -->
                 <div class="form-group">
                     <label for="members">Project Members</label>
-                    <select class="form-control" id="members" name="members[]" multiple>
+                    <div id="members">
                         @foreach($academicians as $academician)
-                        <option value="{{ $academician->id }}">{{ $academician->name }}</option>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="members[]"
+                                value="{{ $academician->id }}" id="member{{ $academician->id }}">
+                            <label class="form-check-label" for="member{{ $academician->id }}">
+                                {{ $academician->name }}
+                            </label>
+                        </div>
                         @endforeach
-                    </select>
+                    </div>
                 </div>
 
 
