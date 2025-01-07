@@ -3,8 +3,10 @@
 @section('content')
 <div class="container mt-5 pt-5">
     <a href="/home">Back</a>
+    @canany(['isAdmin', 'isAcademician'], App\Models\Grant::class)
     <h1>Milestone List</h1>
     <a href="{{ route('milestones.create') }}" class="btn btn-primary mb-3">Add Milestone</a>
+    @endcanany
 
     @if ($milestones->isEmpty())
     <p>No milestones found.</p>
@@ -57,6 +59,7 @@
                 <td>{{ $milestone->date_updated }}</td>
                 <td>
                     <a href="{{ route('milestones.show', $milestone->id) }}" class="btn btn-info">Show</a>
+                    @canany(['isAdmin', 'isAcademician'], App\Models\Grant::class)
                     <a href="{{ route('milestones.edit', $milestone->id) }}" class="btn btn-primary">Edit</a>
                     <form action="{{ route('milestones.destroy', $milestone) }}" method="POST" class="d-inline">
                         @csrf
@@ -64,6 +67,7 @@
                         <button type="submit" class="btn btn-danger btn-md"
                             onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
+                    @endcanany
                 </td>
             </tr>
             @endforeach

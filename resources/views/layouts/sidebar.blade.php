@@ -9,23 +9,23 @@
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
-        @can('isAdmin' , App\Models\Grant::class)
+        @canany(['isAdmin', 'isStaff'], App\Models\Grant::class)
         <li class="nav-item">
             <a class="nav-link collapsed" href="/academicians">
                 <i class="bi bi-person"></i>
                 <span>Academicians</span>
             </a>
         </li><!-- End Academicians Nav -->
-        @endcan
+        @endcanany
 
-        @canany(['isAdmin', 'isStaff'], App\Models\Grant::class)
+
         <li class="nav-item">
             <a class="nav-link collapsed" href="/grants">
                 <i class="bi bi-envelope"></i>
                 <span>Grants</span>
             </a>
         </li><!-- End Grants Nav -->
-        @endcanany
+
 
         @canany(['isAdmin', 'isAcademician'], App\Models\Grant::class)
         <li class="nav-item">

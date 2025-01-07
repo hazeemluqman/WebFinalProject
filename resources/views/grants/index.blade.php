@@ -64,12 +64,14 @@
                 <td>
                     <a href="{{ route('grants.show', $grant->id) }}" class="btn btn-info">Show</a>
                     <a href="{{ route('grants.edit', $grant->id) }}" class="btn btn-primary">Edit</a>
+                    @can('isAdmin' , App\Models\Grant::class)
                     <form action="{{ route('grants.destroy', $grant) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-md"
                             onclick="return confirm('Are you sure?')">Delete</button>
                     </form>
+                    @endcan
                 </td>
             </tr>
             @endforeach
