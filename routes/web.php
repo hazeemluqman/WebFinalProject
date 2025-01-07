@@ -8,7 +8,7 @@ use App\Http\Controllers\GrantMemberController;
 use App\Http\Controllers\MilestoneController;
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('welcome2');
 });
 
 Route::resource('/academicians', AcademicianController::class);
