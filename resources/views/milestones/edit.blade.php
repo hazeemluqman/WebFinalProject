@@ -30,16 +30,14 @@
                 value="{{ old('target_completion_date', $milestone->target_completion_date) }}" required>
         </div>
 
+
         <div class="mb-3">
             <label for="status" class="form-label">Status</label>
             <select id="status" name="status" class="form-control" required>
                 <option value="">Select Status</option>
-                <option value="pending" {{ old('status', $milestone->status) == 'pending' ? 'selected' : '' }}>Pending
-                </option>
-                <option value="in_progress" {{ old('status', $milestone->status) == 'in_progress' ? 'selected' : '' }}>
-                    In Progress</option>
-                <option value="completed" {{ old('status', $milestone->status) == 'completed' ? 'selected' : '' }}>
-                    Completed</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
             </select>
         </div>
 
