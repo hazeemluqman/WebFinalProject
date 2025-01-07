@@ -63,20 +63,7 @@
                     </select>
                 </div>
 
-                <div class="mb-3">
-                    <label for="members" class="form-label">Project Members</label>
-                    <select name="members[]" id="members" class="form-control" multiple>
-                        @foreach ($academicians as $academician)
-                        <option value="{{ $academician->id }}"
-                            {{ in_array($academician->id, old('members', $grant->academicians->pluck('id')->toArray())) ? 'selected' : '' }}>
-                            {{ $academician->name }} - {{ $academician->staff_number }}
-                        </option>
-                        @endforeach
-                    </select>
-                    @error('members')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+
 
                 <button type="submit" class="btn btn-primary">Update</button>
                 <a href="{{ route('grants.index') }}" class="btn btn-secondary">Cancel</a>
