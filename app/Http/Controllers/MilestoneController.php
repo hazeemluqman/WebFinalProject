@@ -57,12 +57,13 @@ class MilestoneController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Milestone $milestone)
-    {
-        
-        $milestones = Milestone::all();
-        return view('milestones.edit', compact('milestone'));
-    }
+    public function edit($id)
+{
+    $milestone = Milestone::findOrFail($id);
+    $grants = Grant::all();  // Fetch all grants
+    return view('milestones.edit', compact('milestone', 'grants'));
+}
+
 
     /**
      * Update the specified resource in storage.

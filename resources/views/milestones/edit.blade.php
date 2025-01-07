@@ -32,8 +32,15 @@
 
         <div class="mb-3">
             <label for="status" class="form-label">Status</label>
-            <input type="text" id="status" name="status" class="form-control"
-                value="{{ old('status', $milestone->status) }}">
+            <select id="status" name="status" class="form-control" required>
+                <option value="">Select Status</option>
+                <option value="pending" {{ old('status', $milestone->status) == 'pending' ? 'selected' : '' }}>Pending
+                </option>
+                <option value="in_progress" {{ old('status', $milestone->status) == 'in_progress' ? 'selected' : '' }}>
+                    In Progress</option>
+                <option value="completed" {{ old('status', $milestone->status) == 'completed' ? 'selected' : '' }}>
+                    Completed</option>
+            </select>
         </div>
 
         <div class="mb-3">
@@ -46,6 +53,20 @@
             <label for="remarks" class="form-label">Remarks</label>
             <textarea id="remarks" name="remarks"
                 class="form-control">{{ old('remarks', $milestone->remarks) }}</textarea>
+        </div>
+
+        <!-- Add Grant Edit Field -->
+        <div class="mb-3">
+            <label for="grant_id" class="form-label">Select Grant</label>
+            <select id="grant_id" name="grant_id" class="form-control" required>
+                <option value="">Select a Grant</option>
+                @foreach($grants as $grant)
+                <option value="{{ $grant->id }}"
+                    {{ old('grant_id', $milestone->grant_id) == $grant->id ? 'selected' : '' }}>
+                    {{ $grant->title }}
+                </option>
+                @endforeach
+            </select>
         </div>
 
         <!-- Add Date Updated field -->
