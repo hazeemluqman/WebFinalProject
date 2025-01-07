@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
-<div class="container">
+<div class="container mt-5 pt-5">
     <a href="/home">Back</a>
     <h1>Milestone List</h1>
     <a href="{{ route('milestones.create') }}" class="btn btn-primary mb-3">Add Milestone</a>
