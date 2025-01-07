@@ -20,6 +20,7 @@
                 <th>Grant Provider</th>
                 <th>Start Date</th>
                 <th>Duration (Months)</th>
+                <th>Description</th>
                 <th>Project Leader</th>
                 <th>Members</th>
                 <th>Actions</th>
@@ -34,6 +35,9 @@
                 <td>{{ $grant->grant_provider }}</td>
                 <td>{{ $grant->start_date }}</td>
                 <td>{{ $grant->duration_months }}</td>
+                <td>{{ $grant->description }}</td>
+
+
 
                 <!-- Displaying Project Leader -->
                 <td>

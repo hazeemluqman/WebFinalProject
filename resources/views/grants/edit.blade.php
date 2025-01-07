@@ -42,6 +42,16 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" name="description" class="form-control"
+                        required>{{ old('description', $grant->description) }}</textarea>
+                    @error('description')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+
+                <div class="mb-3">
                     <label for="project_leader_id" class="form-label">Project Leader</label>
                     <select name="project_leader_id" id="project_leader_id" class="form-control" required>
                         <option value="">Select Project Leader</option>

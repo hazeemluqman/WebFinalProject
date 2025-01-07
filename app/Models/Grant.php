@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Grant extends Model
 {
     protected $fillable = [
-        'title', 'grant_amount', 'grant_provider', 'start_date', 'duration_months', 'project_leader_id'
+        'title', 'grant_amount', 'grant_provider', 'start_date', 'duration_months','description', 'project_leader_id'
     ];
     public function academicians()
 {

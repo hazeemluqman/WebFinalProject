@@ -41,9 +41,11 @@ class GrantController extends Controller
         'grant_provider' => 'required',
         'start_date' => 'required',
         'duration_months' => 'required',
+        'description' => 'nullable|string',
         'project_leader_id' => 'required|exists:academicians,id', // Make sure project leader exists
         'members' => 'nullable|array', // Validate members as an array
         'members.*' => 'exists:academicians,id', // Ensure all selected members are valid academicians
+        
     ]);
 
     // Create the Grant record
@@ -95,6 +97,7 @@ class GrantController extends Controller
             'grant_provider' => 'required',
             'start_date' => 'required',
             'duration_months' => 'required',
+            'description' => 'nullable|string',
         ]);
 
         // Update the grant record with the new data

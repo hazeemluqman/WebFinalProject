@@ -59,6 +59,16 @@
                     @enderror
                 </div>
 
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea id="description" name="description" class="form-control"
+                        required>{{ old('description') }}</textarea>
+                    @error('description')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
+
                 <!-- Project Leader Field -->
                 <div class="mb-3">
                     <label for="project_leader_id" class="form-label">Project Leader</label>

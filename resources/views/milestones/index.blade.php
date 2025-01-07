@@ -19,6 +19,7 @@
                 <th>Status</th>
                 <th>Deliverable</th>
                 <th>Remarks</th>
+                <th>Date Updated</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -53,6 +54,7 @@
                 </td>
                 <td>{{ $milestone->deliverable }}</td>
                 <td>{{ $milestone->remarks ?? 'N/A' }}</td>
+                <td>{{ $milestone->date_updated }}</td>
                 <td>
                     <a href="{{ route('milestones.show', $milestone->id) }}" class="btn btn-info">Show</a>
                     <a href="{{ route('milestones.edit', $milestone->id) }}" class="btn btn-primary">Edit</a>
