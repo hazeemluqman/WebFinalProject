@@ -7,7 +7,6 @@ use App\Models\Academician;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-
 class GrantController extends Controller
 {
     /**
@@ -30,13 +29,11 @@ class GrantController extends Controller
         return view('grants.index', compact('grants'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        // Fetch all academicians and pass them to the 'grants.create' view
         $academicians = Academician::all();
         return view('grants.create', compact('academicians'));
     }
@@ -45,46 +42,49 @@ class GrantController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    // Validate the incoming request data
-    $request->validate([
-        'title' => 'required',
-        'grant_amount' => 'required',
-        'grant_provider' => 'required',
-        'start_date' => 'required',
-        'duration_months' => 'required',
-        'description' => 'nullable|string',
-        'project_leader_id' => 'required|exists:academicians,id', // Ensure project leader exists
-        'members' => 'nullable|array', // Validate members as an array
-        'members.*' => 'exists:academicians,id', // Ensure all selected members are valid academicians
-    ]);
+    {
+        $request->validate([
+            'title' => 'required',
+            'grant_amount' => 'required',
+            'grant_provider' => 'required',
+            'start_date' => 'required',
+            'duration_months' => 'required',
+            'description' => 'nullable|string',
+            'project_leader_id' => 'required|exists:academicians,id',
+            'members' => 'nullable|array',
+            'members.*' => 'exists:academicians,id',
+        ]);
 
-    // Create the Grant record, including the project_leader_id
-    $grant = Grant::create($request->only('title', 'grant_amount', 'grant_provider', 'start_date', 'duration_months', 'description', 'project_leader_id'));
+        // Create the grant record including `project_leader_id`
+        $grant = Grant::create($request->only(
+            'title',
+            'grant_amount',
+            'grant_provider',
+            'start_date',
+            'duration_months',
+            'description',
+            'project_leader_id'
+        ));
 
-    // Attach the project leader to the grant
-    $grant->academicians()->attach($request->project_leader_id, ['role' => 'Project Leader']);
+        // Attach the project leader
+        $grant->academicians()->attach($request->project_leader_id, ['role' => 'Project Leader']);
 
-    // Attach the selected members to the grant, excluding the project leader
-    if ($request->has('members')) {
-        $members = array_diff($request->members, [$request->project_leader_id]);
-        foreach ($members as $memberId) {
-            $grant->academicians()->attach($memberId, ['role' => 'Member']);
+        // Attach members if provided
+        if ($request->has('members')) {
+            $members = array_diff($request->members, [$request->project_leader_id]);
+            foreach ($members as $memberId) {
+                $grant->academicians()->attach($memberId, ['role' => 'Member']);
+            }
         }
+
+        return redirect()->route('grants.index');
     }
-
-    // Redirect to the grants index page
-    return redirect()->route('grants.index');
-}
-
-
 
     /**
      * Display the specified resource.
      */
     public function show(Grant $grant)
     {
-        // Show the details of a single grant
         return view('grants.show', compact('grant'));
     }
 
@@ -93,7 +93,6 @@ class GrantController extends Controller
      */
     public function edit(Grant $grant)
     {
-        // Fetch all academicians and pass the grant to the edit view
         $academicians = Academician::all();
         return view('grants.edit', compact('academicians', 'grant'));
     }
@@ -102,47 +101,41 @@ class GrantController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Grant $grant)
-{
-    // Validate the incoming request data
-    $request->validate([
-        'title' => 'required',
-        'grant_amount' => 'required',
-        'grant_provider' => 'required',
-        'start_date' => 'required',
-        'duration_months' => 'required',
-        'description' => 'nullable|string',
-        'project_leader_id' => 'required|exists:academicians,id', // Make sure project leader exists
-        'members' => 'nullable|array', // Validate members as an array
-        'members.*' => 'exists:academicians,id', // Ensure all selected members are valid academicians
-    ]);
+    {
+        $request->validate([
+            'title' => 'required',
+            'grant_amount' => 'required',
+            'grant_provider' => 'required',
+            'start_date' => 'required',
+            'duration_months' => 'required',
+            'description' => 'nullable|string',
+            'project_leader_id' => 'required|exists:academicians,id',
+            'members' => 'nullable|array',
+            'members.*' => 'exists:academicians,id',
+        ]);
 
-    // Update the grant record with the new data
-    $grant->update($request->except('members', 'project_leader_id'));
+        $grant->update($request->except('members', 'project_leader_id'));
 
-    // Sync the project leader
-    $grant->academicians()->detach(); // Detach all current relationships
-    $grant->academicians()->attach($request->project_leader_id, ['role' => 'Project Leader']); // Attach new project leader
+        // Sync relationships
+        $grant->academicians()->detach();
+        $grant->academicians()->attach($request->project_leader_id, ['role' => 'Project Leader']);
 
-    // Sync the selected members, excluding the project leader
-    if ($request->has('members')) {
-        $members = array_diff($request->members, [$request->project_leader_id]);
-        foreach ($members as $memberId) {
-            $grant->academicians()->attach($memberId, ['role' => 'Member']); // Attach new members
+        if ($request->has('members')) {
+            $members = array_diff($request->members, [$request->project_leader_id]);
+            foreach ($members as $memberId) {
+                $grant->academicians()->attach($memberId, ['role' => 'Member']);
+            }
         }
+
+        return redirect()->route('grants.index');
     }
 
-    // Redirect to the grants index page
-    return redirect()->route('grants.index');
-}
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Grant $grant)
     {
-        // Delete the grant record
         $grant->delete();
-
-        // Redirect to the grants index page
         return redirect()->route('grants.index');
     }
 }
