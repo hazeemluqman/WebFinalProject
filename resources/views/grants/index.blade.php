@@ -3,15 +3,14 @@
 @section('content')
 <div class="container mt-5 pt-5">
     <a href="/home">Back</a>
-    <h1>Grants List</h1>
-    @can('isAdmin', App\Models\Grant::class)
-    <a href="{{ route('grants.create') }}" class="btn btn-primary mb-3">Add Grant</a>
-    @endcan
-
+    <h1>Grant List</h1>
+    @canany(['isAdmin', 'isStaff', 'isAcademician'], App\Models\Grant::class)
+    <a href="{{ route('grants.create') }}" class="btn btn-primary mb-3 mt-3">Add Grant</a>
+    @endcanany
     @if ($grants->isEmpty())
     <p>No grants found.</p>
     @else
-    <table class="table table-bordered">
+    <table class="table table-bordered mt-3">
         <thead>
             <tr>
                 <th>#</th>
@@ -36,19 +35,7 @@
                 <td>{{ $grant->start_date }}</td>
                 <td>{{ $grant->duration_months }}</td>
                 <td>{{ $grant->description }}</td>
-
-
-
-                <!-- Displaying Project Leader -->
-                <td>
-                    @foreach($grant->academicians as $academician)
-                    @if($academician->pivot->role == 'Project Leader')
-                    {{ $academician->name }}
-                    @endif
-                    @endforeach
-                </td>
-
-                <!-- Displaying Members -->
+                <td>{{ $grant->leader()->name }}</td>
                 <td>
                     <ul>
                         @foreach($grant->academicians as $academician)
@@ -58,13 +45,10 @@
                         @endforeach
                     </ul>
                 </td>
-
-
-                <!-- Action Buttons -->
                 <td>
                     <a href="{{ route('grants.show', $grant->id) }}" class="btn btn-info">Show</a>
                     <a href="{{ route('grants.edit', $grant->id) }}" class="btn btn-primary">Edit</a>
-                    @can('isAdmin' , App\Models\Grant::class)
+                    @can('isAdmin', App\Models\Grant::class)
                     <form action="{{ route('grants.destroy', $grant) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Grant;
 use App\Models\Academician;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class GrantController extends Controller
 {
@@ -12,11 +14,21 @@ class GrantController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    // Eager load the 'academicians' relationship
-    $grants = Grant::with('academicians')->get();
-    return view('grants.index', compact('grants'));
-}
+    {
+        $user = Auth::user();
+
+        if ($user->can('viewAllGrants')) {
+            // Admins and staff can view all grants
+            $grants = Grant::with('academicians')->get();
+        } else {
+            // Academicians can only view grants they are associated with
+            $grants = Grant::whereHas('academicians', function ($query) use ($user) {
+                $query->where('academician_id', $user->academician->id);
+            })->with('academicians')->get();
+        }
+
+        return view('grants.index', compact('grants'));
+    }
 
 
     /**
